@@ -1,0 +1,41 @@
+<div class="px-3 mb-4 flex flex-row justify-between relative mt-2">
+  <div class="flex">
+    <a class="border-l next-icon next-icon-left" (click)="onPageLeft()">
+      <mat-icon
+        [svgIcon]="'heroicons_outline:next-left'"
+        class="cursor-pointer"
+      ></mat-icon>
+    </a>
+    <ng-container *ngFor="let page of pages">
+      <button
+        class="page-number"
+        [ngClass]="
+          pagination.index === page ? 'bg-blue-200 text-blue-500' : ''
+        "
+        (click)="onIndexChange(page)"
+      >
+        {{ page }}
+      </button>
+    </ng-container>
+    <a class="next-icon next-icon-right" (click)="onPageRight()">
+      <mat-icon
+        [svgIcon]="'heroicons_outline:next-right'"
+        class="cursor-pointer"
+      ></mat-icon>
+    </a>
+  </div>
+  <div>
+    <span class="font-semibold"
+      >SHOW
+      <select
+        class="ml-2 w-[56px] h-[32px]"
+        [(ngModel)]="pagination.size"
+        (ngModelChange)="onSizeChange()"
+      >
+        <option *ngFor="let size of sizes" [value]="size">{{ size }}</option>
+      </select>
+      <!-- per a page -->
+      </span
+    >
+  </div>
+</div>

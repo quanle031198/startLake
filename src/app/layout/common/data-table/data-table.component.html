@@ -1,0 +1,144 @@
+<div class="w-full overflow-auto max-h-[800px]">
+  <table mat-table [dataSource]="rows" class="demo-table w-full bg-transparent">
+    <ng-container
+      *ngFor="let column of columns"
+      [matColumnDef]="column.columnDef"
+    >
+      <th mat-header-cell *matHeaderCellDef [style.width]="calcColumnWidth(column)" class="text-lg font-normal text-[#212121] dark:text-white sticky top-0 z-10 bg-card"
+          [ngClass]="column.columnDef === 'action' ? 'right-0' : ''">
+        <div class="flex lg:items-center lg:flex-row lg:justify-start md:flex-col md:justify-center gap-1 w-full px-1">
+          {{column.header}}
+          <mat-icon (click)="sortData(column.columnDef)" *ngIf="column.isShowFilter" svgIcon="heroicons_outline:arrow-3" class="cursor-pointer icon-size-3"
+                    style="color: #212121"></mat-icon>
+        </div>
+      </th>
+
+      <td class="px-1"
+          [ngClass]="column.columnDef === 'action' ? 'sticky right-0 bg-card z-9' : ''"
+        mat-cell
+        *matCellDef="let row"
+        [class]="column.tdClass"
+      >
+        <ng-container [ngSwitch]="column.columnDef">
+          <ng-container *ngSwitchCase="'stt'">
+            <div class="pl-2">{{ getRowIndex(row) + 1 }}</div>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <ng-container
+              [ngTemplateOutlet]="rowTemplate || defaultRowTemplate"
+              [ngTemplateOutletContext]="{ row: row, column: column }"
+            >
+            </ng-container>
+            <ng-template #defaultRowTemplate>
+              <ng-template #isNotCellRenderer>
+                <ng-container [ngSwitch]="column.pipe">
+                  <ng-container *ngSwitchCase="'date'">
+                    {{ row[column.columnDef] | date : "dd/MM/yyyy" }}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'template'">
+                    <ng-container
+                      *ngTemplateOutlet="
+                          column.templateColumn!;
+                          context: { $implicit: row }
+                        "
+                    >
+                      <!-- [ngTemplateOutletContext]="{ row: row, column: column }" -->
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'link'">
+                    <a
+                      class="text-primary cursor-pointer"
+                      [routerLink]="'https://www.google.com/'"
+                    >
+                      {{ row[column.columnDef] }}
+                    </a>
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    <span class="whitespace-nowrap truncate text-base text-[#616161]">
+                      {{ row[column.columnDef] }}
+                    </span>
+                  </ng-container>
+                </ng-container>
+              </ng-template>
+
+              <ng-container *ngIf="column.cellRenderer; else isNotCellRenderer">
+                <div
+                  [innerHTML]="
+                    column.cellRenderer
+                      ? column.cellRenderer(row)
+                      : row[column.columnDef]
+                  "
+                  class="whitespace-nowrap truncate text-base text-[#616161]"
+                ></div>
+              </ng-container>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </td>
+    </ng-container>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+      class="h-[48px]"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="h-[72px]"
+    >
+      123
+    </tr>
+  </table>
+  <!-- paginator -->
+</div>
+<div *ngIf="paginate" class="px-3 mb-4 flex flex-row justify-between relative mt-2">
+  <div class="flex">
+    <a class="border-l next-icon next-icon-left" (click)="onPageLeft()">
+      <mat-icon
+        [svgIcon]="'heroicons_outline:next-left'"
+        class="cursor-pointer icon-size-5"
+      ></mat-icon>
+    </a>
+    <ng-container *ngFor="let page of pages">
+      <button
+        class="page-number"
+        [ngClass]="
+            pagination.index === page ? 'bg-blue-200 text-blue-500' : ''
+          "
+        (click)="onIndexChange(page)"
+      >
+        {{ page }}
+      </button>
+    </ng-container>
+    <a class="next-icon next-icon-right" (click)="onPageRight()">
+      <mat-icon
+        [svgIcon]="'heroicons_outline:next-right'"
+        class="cursor-pointer icon-size-5"
+      ></mat-icon>
+    </a>
+  </div>
+  <div>
+      <span class="font-semibold"
+      >SHOW
+        <select
+          class="ml-2 w-[56px] h-[32px]"
+          [(ngModel)]="pagination.size"
+          (ngModelChange)="onSizeChange()"
+        >
+          <option *ngFor="let size of sizes" [value]="size">{{ size }}</option>
+        </select>
+        <!-- per a page -->
+      </span>
+  </div>
+</div>
+<!--<mat-paginator
+  *ngIf="paginate"
+  [pageSizeOptions]="[5, 10, 20]"
+  class="bg-transparent"
+  showFirstLastButtons
+  [pageSize]="limit"
+  [length]="count"
+  (page)="changePage($event)"
+>
+</mat-paginator>-->
+

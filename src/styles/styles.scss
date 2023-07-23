@@ -1,0 +1,313 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+:root {
+  --my-primary-red: #EE0033;
+  --my-primary-black: #131212;
+  --my-success: #00A520;
+  --my-warning: #E6353D;
+  --my-alert: #FFB201;
+  --my-information: #064FF3;
+  --my-text-active: #212121;
+  --my-text-label: #616161;
+  --my-text-placeholder: #9E9E9E;
+  --my-text-inverse-active: #FFFFFF;
+  --my-text-inverse-label: #FAFAFA;
+  --my-text-inverse-placeholder: #F5F5F5;
+  --my-surface-secondary: #FAFAFA;
+  --my-surface-tertiary: #F5F5F5;
+  --my-surface-inverse-primary: #131212;
+  --my-surface-inverse-secondary: #212121;
+  --my-surface-inverse-tertiary: #424242;
+  --my-surface-neutral: #9E9E9E;
+  --my-surface-green50: #E5F6E6;
+  --my-surface-red50: #FEEBEF;
+  --my-surface-yello50: #FFF8E1;
+  --my-surface-blue50: #E9ECFF;
+  --my-border-primary: #BDBDBD;
+  --my-border-secondary: #E0E0E0;
+  --my-state-resting: #131212;
+  --my-state-active: #EE0033;
+  --my-state-disabled: #9E9E9E;
+  --my-state-pressed700: #D32B37;
+  --my-state-pressed50: #EEE9FE;
+  --my-green-900: #006300;
+  --my-green-800: #008200;
+  --my-green-700: #009312;
+  --my-green-600: #00A520;
+  --my-green-500: #00B42A;
+  --my-green-400: #45C04F;
+  --my-green-300: #6CCB70;
+  --my-green-200: #99D99A;
+  --my-green-100: #C2E8C2;
+  --my-green-50: #E5F6E6;
+  --my-red-900: #B71724;
+  --my-red-800: #C62430;
+  --my-red-700: #D32B37;
+  --my-red-600: #E6353D;
+  --my-red-500: #F53F3F;
+  --my-red-400: #EF5157;
+  --my-red-300: #E47278;
+  --my-red-200: #EE9A9E;
+  --my-red-100: #FECDD4;
+  --my-red-50: #FEEBEF;
+  --my-yellow-900: #FF6E01;
+  --my-yellow-800: #FF8E01;
+  --my-yellow-700: #FF9F01;
+  --my-yellow-600: #FFB201;
+  --my-yellow-500: #FFC007;
+  --my-yellow-400: #FFC928;
+  --my-yellow-300: #FFD44F;
+  --my-yellow-200: #FFE082;
+  --my-yellow-100: #FFECB3;
+  --my-yellow-50: #FFF8E1;
+  --my-blue-900: #001FCB;
+  --my-blue-800: #0038DB;
+  --my-blue-700: #0044E6;
+  --my-blue-600: #064FF3;
+  --my-blue-500: #1158FF;
+  --my-blue-400: #4E74FF;
+  --my-blue-300: #758FFF;
+  --my-blue-200: #A1AFFF;
+  --my-blue-100: #C8CEFF;
+  --my-blue-50: #E9ECFF;
+  --my-neutral-900: #212121;
+  --my-neutral-800: #424242;
+  --my-neutral-700: #616161;
+  --my-neutral-600: #757575;
+  --my-neutral-500: #9E9E9E;
+  --my-neutral-400: #BDBDBD;
+  --my-neutral-300: #E0E0E0;
+  --my-neutral-200: #EEEEEE;
+  --my-neutral-100: #F5F5F5;
+  --my-neutral-50: #FAFAFA;
+}
+
+.sign-in-background {
+  background-image: url("~assets/images/ui/login-bg.png");
+  background-size: cover;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(249 250 251);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #888;
+  border-radius: 10px;
+}
+
+.required {
+  &:after {
+    content: '*';
+    color: red;
+    font-size: 18px;
+    margin-left: 5px;
+  }
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: rgb(66, 134, 244) !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  color: rgb(66, 134, 244) !important;
+  background-color: rgb(66, 134, 244) !important;;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: rgb(255, 37, 37, .26) !important;
+}
+
+.mat-snack-bar-container {
+  color: #fff !important;
+}
+
+/*Custom mat select trigger*/
+mat-select-trigger.custom-mat-trigger {
+  display: flex;
+}
+
+.mat-form-field {
+  border-radius: 8px;
+
+  &.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex {
+    border-radius: 8px;
+    /*Mat chip*/
+    & .mat-form-field-infix .custom-mat-trigger .mat-chip-list {
+      margin: 4px 0px;
+    }
+
+    & .mat-standard-chip {
+      border-radius: 4px;
+      background-color: #E5E5E7;
+      padding: 12px 5px;
+      font-size: 12px;
+      min-height: unset;
+      font-size: 12px;
+      color: #313D54;
+    }
+  }
+}
+
+/*Custom mat table*/
+.demo-table
+{
+  & th.mat-header-cell
+  {
+    &:first-of-type{
+      border-top-left-radius: 12px;
+      padding-left: 10px;
+    }
+    &:last-of-type{
+      border-top-right-radius: 12px;
+      padding-right: 0px;
+    }
+  }
+  & td.mat-cell{
+    &:first-of-type{
+      padding-left: 10px;
+    }
+  }
+}
+
+
+/*Custom mat menu*/
+div.mat-menu-panel {
+  border-radius: 8px;
+
+  & .mat-menu-content:not(:empty) {
+    padding-bottom: 0px;
+    padding-top: 0px;
+  }
+}
+
+/*Custom button color*/
+[disabled] * {
+  color: unset !important;
+}
+
+body.light , body.dark{
+  & .mat-flat-button {
+
+    /*button primary*/
+    &.btn-primary {
+      background-color: var(--my-primary-black);
+      color: var(--my-neutral-100) !important;
+
+      &:hover {
+        background-color: var(--my-neutral-800);
+      }
+
+      &:disabled {
+        background-color: var(--my-neutral-500);
+      }
+    }
+
+    &.btn-primary-active {
+      background-color: var(--my-primary-red);
+      color: var(--my-text-inverse-label) !important;
+
+      &:disabled {
+        background-color: var(--my-red-200);
+      }
+    }
+
+    /*button secondary*/
+    &.btn-secondary {
+      background-color: var(--my-neutral-300);
+      color: var(--my-state-resting) !important;
+
+      &:hover {
+        background-color: var(--my-neutral-400);
+      }
+
+      &:disabled {
+        background-color: var(--my-neutral-500);
+      }
+    }
+
+    &.btn-secondary-active {
+      background-color: var(--my-surface-red50);
+      color: var(--my-primary-red) !important;
+    }
+
+  }
+}
+
+/*Custom material dialog*/
+.mat-dialog-container {
+  padding: 0px !important;
+  background-color: var(--my-neutral-50);
+}
+
+/*Custom mat tabs*/
+body.light, body.dark {
+  & .custom-mat-tabs
+  {
+    & .mat-tab-header {
+      background-color: #F5F5F5;
+      height: 64px;
+      border-radius: 12px 12px 0px 0px;
+
+      & .mat-tab-label-container {
+        padding: 0px;
+
+        & .mat-tab-list .mat-tab-labels {
+          height: 100%;
+          width: max-content;
+
+          & .mat-tab-label {
+            height: 100% !important;
+            border-radius: 0px !important;
+
+            &.mat-tab-label-active {
+              background-color: transparent !important;
+              height: 100%;
+              border-bottom: 1px solid #EE0033;
+
+              & span{
+                color: #EE0033 !important;
+              }
+
+              & .mat-tab-label-content mat-icon{
+                color: #EE0033 !important;
+              }
+
+            }
+          }
+        }
+      }
+    }
+    & .mat-tab-body-content{
+      padding: 0px;
+    }
+  }
+
+}
+
+/*Custom mat checkbox*/
+body.light, body.dark{
+  & .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #2B78E4;
+  }
+}
+

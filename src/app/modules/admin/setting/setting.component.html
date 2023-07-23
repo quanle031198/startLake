@@ -1,0 +1,222 @@
+<ng-container *transloco="let t">
+  <div class="bg-card h-full w-full p-8">
+    <div class="w-full flex justify-between pb-3">
+      <div class="flex flex-col">
+        <app-breadcrumb></app-breadcrumb>
+        <span class="text-4xl">Setting</span>
+      </div>
+      <div class="flex items-center">
+        <mat-form-field
+          class="fuse-mat-no-subscript w-full sm:w-72 mt-4 sm:mt-0 sm:ml-4 bg-default mr-4"
+          [floatLabel]="'always'">
+          <mat-icon
+            matPrefix
+            class="icon-size-5"
+            [svgIcon]="'heroicons_solid:search'"></mat-icon>
+          <input
+            placeholder="Search"
+            [(ngModel)]="paginate.keySearch"
+            (keyup.enter)="initData()"
+            matInput>
+        </mat-form-field>
+        <button mat-flat-button class="btn-secondary-active mr-4 rounded-lg">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20.2857 1.71436H1.71429C1.71508 3.80516 2.42038 5.8347 3.71636 7.47541C5.01233 9.11611 6.82337 10.2722 8.85715 10.7572V20.2858L13.1429 17.4286V10.7572C15.1766 10.2722 16.9877 9.11611 18.2837 7.47541C19.5796 5.8347 20.2849 3.80516 20.2857 1.71436Z"
+              stroke="#EE0033" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="ml-2">Filter</span>
+        </button>
+        <button *ngIf="selectedTab === 2" mat-flat-button class="btn-secondary rounded-lg mr-4" (click)="assignUser()">
+          <mat-icon class="icon-size-5 mr-2" svgIcon="heroicons_outline:profile-tick"></mat-icon>
+          Assign user
+        </button>
+        <button mat-flat-button class="btn-primary-active rounded-lg" (click)="addNew()">
+          <mat-icon class="icon-size-6 mr-2" svgIcon="heroicons_outline:plus"></mat-icon>
+          {{selectedTab === 0 ? 'Add new user' : selectedTab === 1 ? 'Add new group' : 'Add new role'}}
+        </button>
+      </div>
+    </div>
+
+    <!--Tab groups-->
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="custom-mat-tabs" [(selectedIndex)]="selectedTab" (selectedTabChange)="changeTab$.next($event)">
+      <!--Tab User-->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="text-[#616161]" [svgIcon]="'heroicons_outline:profile'"></mat-icon>
+          <span class="ml-3 text-lg text-[#616161]">User</span>
+        </ng-template>
+        <ng-container
+          [ngTemplateOutlet]="contentTab"
+          [ngTemplateOutletContext]="{ dataTable: dataTable, columnTable: columns, rowTemplate: rowUserTemp }">
+        </ng-container>
+        <ng-template #rowUserTemp let-row="row" let-column="column">
+          <ng-container [ngSwitch]="column.columnDef">
+            <ng-container *ngSwitchCase="'action'">
+              <div class="w-full">
+                <button mat-icon-button [matMenuTriggerFor]="menuUser">
+                  <mat-icon svgIcon="heroicons_outline:ellipsis-horizontal" class="icon-size-5"></mat-icon>
+                </button>
+                <mat-menu #menuUser="matMenu">
+                  <button mat-menu-item (click)="addOrEditUser(row)">
+                    <mat-icon svgIcon="heroicons_outline:edit-2" class="icon-size-5"></mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="addOrEditUser(row)">
+                    <mat-icon svgIcon="heroicons_outline:eye" class="icon-size-5"></mat-icon>
+                    <span>View</span>
+                  </button>
+                  <button mat-menu-item (click)="lockOrUnlockUser(row)">
+                    <mat-icon svgIcon="heroicons_outline:lock-closed" class="icon-size-5"></mat-icon>
+                    <span>Lock/Unlock</span>
+                  </button>
+                  <button mat-menu-item (click)="resetPassword(row)">
+                    <mat-icon svgIcon="heroicons_outline:key" class="icon-size-5"></mat-icon>
+                    <span>Reset password</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'status'">
+              <div [matMenuTriggerFor]="menuS" [ngClass]="row.status ? 'border-[#44B987] bg-[#73CBA526] text-[#44B987]' : 'border-[#FD557E] text-[#FD557E] bg-[#FEEBEF]'"
+                   class="px-1 w-20 border cursor-pointer inline-flex justify-between items-center rounded text-md">
+                <span>{{row.status ? 'Active': 'Inactive'}}</span>
+                <mat-icon [ngClass]="row?.status ? 'text-[#44B987]' : 'text-[#FD557E]'" svgIcon="heroicons_solid:arrow-down-select" class="cursor-pointer icon-size-5"></mat-icon>
+              </div>
+              <mat-menu #menuS="matMenu">
+                <button mat-menu-item (click)="changeStatusUser(row, 1)">
+                  <span>Active</span>
+                </button>
+                <button mat-menu-item (click)="changeStatusUser(row, 0)">
+                  <span>InActive</span>
+                </button>
+              </mat-menu>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <div [innerHTML]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"
+                   class="whitespace-nowrap truncate text-base text-[#616161]"></div>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+      <!--Tab Group-->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="text-[#616161]" [svgIcon]="'heroicons_outline:people'"></mat-icon>
+          <span class="ml-3 text-lg text-[#616161]">Group</span>
+        </ng-template>
+        <ng-container
+          [ngTemplateOutlet]="contentTab"
+          [ngTemplateOutletContext]="{ dataTable: dataTable, columnTable: columns, rowTemplate: rowGroupTemp }">
+        </ng-container>
+        <ng-template #rowGroupTemp let-row="row" let-column="column">
+          <ng-container [ngSwitch]="column.columnDef">
+            <ng-container *ngSwitchCase="'action'">
+              <div class="w-full">
+                <button mat-icon-button [matMenuTriggerFor]="menuUser">
+                  <mat-icon svgIcon="heroicons_outline:ellipsis-horizontal" class="icon-size-5"></mat-icon>
+                </button>
+                <mat-menu #menuUser="matMenu">
+                  <button mat-menu-item (click)="addOrEditGroup(row)">
+                    <mat-icon svgIcon="heroicons_outline:edit-2" class="icon-size-5"></mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteGroup(row)">
+                    <mat-icon svgIcon="heroicons_outline:trash" class="icon-size-5"></mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'status'">
+              <div [matMenuTriggerFor]="menuS" [ngClass]="row.status ? 'border-[#44B987] bg-[#73CBA526] text-[#44B987]' : 'border-[#FD557E] text-[#FD557E] bg-[#FEEBEF]'"
+                   class="px-1 w-20 border cursor-pointer inline-flex justify-between items-center rounded text-md">
+                <span>{{row.status ? 'Active': 'Inactive'}}</span>
+                <mat-icon [ngClass]="row?.status ? 'text-[#44B987]' : 'text-[#FD557E]'" svgIcon="heroicons_solid:arrow-down-select" class="cursor-pointer icon-size-5"></mat-icon>
+              </div>
+              <mat-menu #menuS="matMenu">
+                <button mat-menu-item (click)="changeStatusGroup(row, 1)">
+                  <span>Active</span>
+                </button>
+                <button mat-menu-item (click)="changeStatusGroup(row, 0)">
+                  <span>InActive</span>
+                </button>
+              </mat-menu>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <div [innerHTML]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"
+                   class="whitespace-nowrap truncate text-base text-[#616161]"></div>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+      <!--Tab Role-->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="text-[#616161]" [svgIcon]="'heroicons_outline:shield-search'"></mat-icon>
+          <span class="ml-3 text-lg text-[#616161]">Role</span>
+        </ng-template>
+        <ng-container
+          [ngTemplateOutlet]="contentTab"
+          [ngTemplateOutletContext]="{ dataTable: dataTable, columnTable: columns, rowTemplate: rowRoleTemp}">
+        </ng-container>
+        <ng-template #rowRoleTemp let-row="row" let-column="column">
+          <ng-container [ngSwitch]="column.columnDef">
+            <ng-container *ngSwitchCase="'action'">
+              <div class="w-full">
+                <button mat-icon-button [matMenuTriggerFor]="menuUser">
+                  <mat-icon svgIcon="heroicons_outline:ellipsis-horizontal" class="icon-size-5"></mat-icon>
+                </button>
+                <mat-menu #menuUser="matMenu">
+                  <button mat-menu-item (click)="addOrEditUser(row)">
+                    <mat-icon svgIcon="heroicons_outline:edit-2" class="icon-size-5"></mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteRole(row?.id)">
+                    <mat-icon svgIcon="heroicons_outline:trash" class="icon-size-5"></mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'status'">
+              <div [matMenuTriggerFor]="menuS" [ngClass]="row.status ? 'border-[#44B987] bg-[#73CBA526] text-[#44B987]' : 'border-[#FD557E] text-[#FD557E] bg-[#FEEBEF]'"
+                   class="px-1 w-20 border cursor-pointer inline-flex justify-between items-center rounded text-md">
+                <span>{{row.status ? 'Active': 'Inactive'}}</span>
+                <mat-icon [ngClass]="row?.status ? 'text-[#44B987]' : 'text-[#FD557E]'" svgIcon="heroicons_solid:arrow-down-select" class="cursor-pointer icon-size-5"></mat-icon>
+              </div>
+              <mat-menu #menuS="matMenu">
+                <button mat-menu-item (click)="changeStatusGroup(row, 1)">
+                  <span>Active</span>
+                </button>
+                <button mat-menu-item (click)="changeStatusGroup(row, 0)">
+                  <span>InActive</span>
+                </button>
+              </mat-menu>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <div [innerHTML]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"
+                   class="whitespace-nowrap truncate text-base text-[#616161]"></div>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</ng-container>
+
+
+<ng-template #contentTab let-dataTable="dataTable" let-columns="columnTable" let-rowTemplate="rowTemplate">
+  <div class="w-full border rounded-b-xl">
+    <app-data-table [rows]="dataTable | slice : (pagination.index - 1) * pagination.size : pagination.size * pagination.index"
+                    [columns]="columns"
+                    [pagination]="pagination"
+                    [paginate]="true"
+                    [rowTemplate]="rowTemplate"
+                    (sortColumn)="sortTable($event)"
+                    (sizeChange)="changeSize($event)"
+                    (pageChange)="changePage($event)">
+    </app-data-table>
+  </div>
+</ng-template>
+

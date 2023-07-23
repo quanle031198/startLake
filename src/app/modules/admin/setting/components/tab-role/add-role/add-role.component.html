@@ -1,0 +1,173 @@
+<ng-container *transloco="let t">
+  <div class="bg-card h-full w-full flex flex-col p-8">
+    <div class="w-full flex justify-between pb-3">
+      <div class="flex flex-col">
+        <app-breadcrumb></app-breadcrumb>
+        <span class="text-4xl">Admin Role</span>
+      </div>
+      <div class="flex items-center">
+        <button mat-flat-button class="btn-secondary rounded-lg mr-3 px-9" (click)="backTabRole()">
+          Cancel
+        </button>
+        <button mat-flat-button class="btn-primary-active rounded-lg px-10" (click)="saveRole()">
+          Save
+        </button>
+      </div>
+    </div>
+    <div class="w-full h-full border rounded-xl p-4">
+      <div [formGroup]="formGroup" class="mb-4 w-1/4">
+        <div class="field w-full flex flex-col mb-4">
+          <label class="flex mb-1 text-[#323544] font-medium text-base">
+            <span class="required flex">Role name</span>
+            <mat-icon svgIcon="heroicons_outline:exclamation-circle" class="icon-size-5 text-[#AFAFB7] ml-1"></mat-icon>
+          </label>
+          <div class="input w-full">
+            <mat-form-field
+              class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card custom-form-field">
+              <input class="w-full"
+                     placeholder="Role name"
+                     formControlName="code"
+                     matInput>
+            </mat-form-field>
+            <app-error-message [control]="formGroup.get('code')" name="Code"></app-error-message>
+          </div>
+        </div>
+        <div class="field w-full flex gap-5">
+          <label class="flex text-[#323544] font-medium text-base">
+            <span class="flex">Status</span>
+          </label>
+          <div class="input w-full">
+            <mat-slide-toggle formControlName="status" color="primary"></mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+      <div class="w-full border rounded-t-xl">
+        <table mat-table [dataSource]="listMenu" multiTemplateDataRows
+               class="role-table w-full bg-transparent shadow-none">
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+            <th mat-header-cell *matHeaderCellDef
+                class="text-lg font-medium "
+                [ngClass]="column === 'module' ? 'text-[#9E9E9E]' : 'text-[#474343]'"
+                [ngStyle]="column === 'action' ? {'width': '2%'} : column !== 'module' ? {'width': '8%'} : ''">
+              {{column !== 'action' ? column.toUpperCase() : ''}}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container [ngSwitch]="column">
+                <ng-container *ngSwitchCase="'action'">
+                  <mat-icon *ngIf="element?.subMenu?.length > 0"
+                            [svgIcon]="listShowExpanded.includes(element?.id) ? 'heroicons_solid:arrow-up-solid' : 'heroicons_solid:arrow-down-select'"
+                            class="cursor-pointer text-[#474343]"
+                            (click)="showChild(element)"
+                  ></mat-icon>
+                </ng-container>
+                <ng-container *ngSwitchCase="'module'">
+                  <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_outline:monitor-recorder"
+                              class="icon-size-5 text-[#2B78E4] mr-3"></mat-icon>
+                    <span class="text-lg font-medium">{{element['code']}}</span>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <mat-checkbox [(ngModel)]="element[column]">
+                  </mat-checkbox>
+                </ng-container>
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td class="sub-table" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div class="example-element-detail"
+                   [@detailExpand]="listShowExpanded.includes(element?.id) ? 'expanded' : 'collapsed'">
+                <!--<div class="w-full">
+                  <table mat-table [dataSource]="getDataChild(element)" multiTemplateDataRows
+                         class="w-full bg-transparent">
+                    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                      <th mat-header-cell *matHeaderCellDef>{{column.toUpperCase()}}</th>
+                      <td mat-cell *matCellDef="let element"
+                          [ngStyle]="column === 'action' ? {'width': '1%'} : column !== 'module' ? {'width': '8%'} : ''">
+                        <ng-container [ngSwitch]="column">
+                          <ng-container *ngSwitchCase="'action'">
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'module'">
+                            <span class="ml-8 text-base">{{element['module']}}</span>
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            <mat-checkbox [(ngModel)]="element[column]">
+                            </mat-checkbox>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="h-9"
+                        style="border-top: 1px solid #E0E0E0"></tr>
+                  </table>
+                </div>-->
+                <ng-container [ngTemplateOutlet]="contentTab"
+                              [ngTemplateOutletContext]="{element: element, level: 2}"></ng-container>
+              </div>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay" class="h-9"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+              class="example-element-row h-9 bg-[#F5F5F5] dark:bg-transparent parent-module"
+              [class.example-expanded-row]="listShowExpanded.includes(element?.id)"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #contentTab let-element="element" let-level="level">
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <div class="w-full" *ngIf="element?.subMenu?.length > 0">
+    <table mat-table [dataSource]="element?.subMenu" multiTemplateDataRows
+           class="w-full bg-transparent">
+      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef>{{column.toUpperCase()}}</th>
+        <td mat-cell *matCellDef="let row"
+            [ngStyle]="column === 'action' ? {'width': '2%'} : column !== 'module' ? {'width': '8%'} : ''">
+          <ng-container [ngSwitch]="column">
+            <ng-container *ngSwitchCase="'action'">
+              <mat-icon *ngIf="row?.subMenu?.length > 0"
+                        [svgIcon]="listShowExpanded.includes(row?.id) ? 'heroicons_solid:arrow-up-solid' : 'heroicons_solid:arrow-down-select'"
+                        class="cursor-pointer text-[#474343]"
+                        (click)="showChild(row)"
+              ></mat-icon>
+            </ng-container>
+            <ng-container *ngSwitchCase="'module'">
+              <span class="text-base ml-8">{{row['code']}}</span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <mat-checkbox [(ngModel)]="row[column]">
+              </mat-checkbox>
+            </ng-container>
+          </ng-container>
+        </td>
+      </ng-container>
+      <ng-container [matColumnDef]="'expandedDetail'">
+        <td class="sub-table" mat-cell *matCellDef="let row" [attr.colspan]="columnsToDisplay.length">
+          <div class="example-element-detail" *ngIf="row?.subMenu?.length > 0"
+               [@detailExpand]="listShowExpanded.includes(row?.id) ? 'expanded' : 'collapsed'">
+            <ng-container [ngTemplateOutlet]="contentTab"
+                          [ngTemplateOutletContext]="{element: row, level: level+1}">
+            </ng-container>
+          </div>
+      </ng-container>
+
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="h-9"
+          style="border-top: 1px solid #E0E0E0"
+          [class.example-expanded-row]="listShowExpanded.includes(element?.id)"></tr>
+      <ng-container *ngIf="element?.subMenu.length > 0">
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </ng-container>
+    </table>
+  </div>
+</ng-template>
+
+

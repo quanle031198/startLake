@@ -1,0 +1,27 @@
+<!--    header-->
+<ng-container *transloco="let t">
+  <div class="header flex justify-between items-center p-6">
+<!--    <div class="text-xl font-bold card-title">-->
+<!--      {{data?.title || 'Xóa bản ghi'}}-->
+<!--    </div>-->
+    <div class="float-right">
+      <button mat-icon-button (click)="dialogRef.close()">
+        <mat-icon svgIcon="heroicons_outline:x" title="Edit" class="icon-size-5"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <!--    content-->
+  <div class="content mt-4 px-6 flex justify-center">
+    <div>{{data?.content || 'Bạn chắc chắn muốn xóa bản ghi?'}}</div>
+  </div>
+  <!--    footer-->
+  <div class="footer p-6 flex justify-end">
+    <button mat-flat-button class="btn-secondary mr-3" (click)="dialogRef.close()">
+      <span>Hủy bỏ</span>
+    </button>
+    <button mat-flat-button class="btn-primary-active" (click)="dialogRef.close('success')">
+      <span>Xác nhận</span>
+    </button>
+  </div>
+</ng-container>
+

@@ -1,0 +1,318 @@
+<!-- <ng-container *transloco="let t">
+  <div class="flex w-full">
+    <div class="w-full h-full">
+      <mat-card class="bg-card h-full">
+        <div class="">
+          <div class="card-title mb-3">
+            <app-breadcrumb></app-breadcrumb>
+          </div>
+        </div>
+        <div class="content mt-4 w-full">
+          <div class="flex justify-between">
+            <div class="text-4xl leading-[40px] card-title mb-3">Tenant</div>
+            <div class=""></div>
+            <div class="flex">
+              <div class="search-and-filter flex mr-4 items-center">
+                <mat-form-field
+                  class="fuse-mat-no-subscript w-full sm:w-72 mt-4 sm:mt-0 sm:ml-4 bg-default"
+                >
+                  <mat-icon
+                    matPrefix
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_solid:search'"
+                  ></mat-icon>
+                  <input
+                    [placeholder]="t('setting.permission.placeholder_search')"
+                    matInput
+                  />
+                </mat-form-field>
+                <mat-form-field
+                  class="fuse-mat-no-subscript w-full sm:w-36 mt-4 sm:mt-0 sm:ml-4 bg-default"
+                >
+                  <input type="date" matInput />
+                </mat-form-field>
+              </div>
+              <div class="add-user mt-1">
+                <button
+                  mat-flat-button
+                  class="bg-[#EE0033] text-[#FAFAFA]"
+                  (click)="addTenant()"
+                >
+                  <mat-icon
+                    class="icon-size-6 mr-2"
+                    svgIcon="heroicons_outline:plus"
+                  ></mat-icon>
+                  Add Tenant
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-3 items-start w-full mb-4"
+          >
+            <ng-container *ngFor="let item of items">
+              <div>
+                <fuse-card
+                  class="flex flex-col md:w-full w-11/12 mx-auto mt-3 px-8 pt-6 pb-4"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="">
+                      <span class="text-2xl font-semibold leading-tight mr-3">{{
+                        item.tenant
+                      }}</span>
+                      <span
+                        class="p-2 rounded-lg"
+                        [class]="
+                          item.isActive
+                            ? 'bg-[#00a52026] text-[#44b987]'
+                            : 'bg-[#f5f5f5] text-[#616161]'
+                        "
+                        >{{ item.isActive ? "Active" : "Inactive" }}</span
+                      >
+                    </div>
+                    <div class="mr-3">
+                      <button mat-icon-button>
+                        <mat-icon
+                          svgIcon="heroicons_outline:ellipsis-vertical"
+                          class="icon-size-5"
+                          [matMenuTriggerFor]="menu"
+                        ></mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="editTenant(item)">
+                          <mat-icon
+                            svgIcon="heroicons_outline:pencil"
+                            class="icon-size-5"
+                          ></mat-icon>
+                          <span>Edit</span>
+                        </button>
+                        <button mat-menu-item>
+                          <mat-icon
+                            svgIcon="heroicons_outline:trash"
+                            class="icon-size-5"
+                          ></mat-icon>
+                          <span>Delete</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
+                  <div class="flex flex-col mt-5">
+                    <div class="flex items-center">
+                      <img
+                        src="assets/images/avatars/male-02.jpg"
+                        alt="Card cover image"
+                        class="w-10 h-10 mr-4 rounded-full"
+                      />
+                      <div class="flex flex-row min-w-0">
+                        <div class="font-medium text-[#616161] mr-3">
+                          {{ item.owner }}
+                        </div>
+                        <div class="font-medium text-[#2b78e4]">(Owner)</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-5">
+                    <span
+                      class="px-3 py-2 text-white cursor-pointer"
+                      [class]="item.isActive ? 'bg-[#44b987]' : 'bg-[#ff0e0e]'"
+                      style="border-radius: 26px"
+                      ><span>
+                        {{ item.isActive ? "Active" : "Inactive" }}</span
+                      ></span
+                    >
+                  </div>
+                  <div class="mt-5">
+                    <div class="flex justify-between">
+                      <div class="text-[#616161]">Created</div>
+                      <div class="text-[#616161]">
+                        {{ item.created_at | date : "dd/MM/yyyy" }}
+                      </div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                      <div class="text-[#616161]">Services</div>
+                    </div>
+                  </div>
+                  <div class="mt-5">
+                    <div class="flex items-center">
+                      <span
+                      class="px-3 py-2 mr-3 text-white cursor-pointer bg-[#44b987]"
+                      style="border-radius: 26px"
+                      ><span>
+                        Service 1</span
+                      ></span>
+                      <span
+                      class="px-3 py-2 mr-3 text-white cursor-pointer bg-[#f7b556]"
+                      style="border-radius: 26px"
+                      ><span>
+                        Service 2</span
+                      ></span>
+                      <span
+                      class="px-3 py-2 mr-3 text-white cursor-pointer bg-[#2420d7]"
+                      style="border-radius: 26px"
+                      ><span>
+                        Service 3</span
+                      ></span>
+                      <div class="text-sm font-medium text-secondary mt-2">
+                        +17 more
+                      </div>
+                    </div>
+                  </div>
+                </fuse-card>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</ng-container> -->
+
+<!--  -->
+<ng-container *transloco="let t">
+  <div class="w-full h-full">
+    <mat-card class="bg-card h-full">
+      <!-- <div class="table-card"></div> -->
+      <div class="">
+        <div class="card-title mb-3">
+          <app-breadcrumb></app-breadcrumb>
+        </div>
+      </div>
+      <div class="content mt-4 w-full">
+        <div class="flex justify-between">
+          <div class="text-4xl leading-[40px] card-title mb-3">
+            {{ t("tenant.tenant_management") }}
+          </div>
+          <div class=""></div>
+          <div class="flex">
+            <div class="search-and-filter flex mr-4 items-center">
+              <mat-form-field
+                class="fuse-mat-no-subscript w-full sm:w-72 mt-4 sm:mt-0 sm:ml-4 bg-default"
+                [floatLabel]="'always'"
+              >
+                <mat-icon
+                  matPrefix
+                  class="icon-size-5"
+                  [svgIcon]="'heroicons_solid:search'"
+                ></mat-icon>
+                <input
+                  [placeholder]="'Search'"
+                  matInput
+                  [formControl]="keyword"
+                />
+              </mat-form-field>
+            </div>
+            <div class="mt-1">
+              <button mat-flat-button class="bg-[#e0e0e0] mr-4">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20.2857 1.71436H1.71429C1.71508 3.80516 2.42038 5.8347 3.71636 7.47541C5.01233 9.11611 6.82337 10.2722 8.85715 10.7572V20.2858L13.1429 17.4286V10.7572C15.1766 10.2722 16.9877 9.11611 18.2837 7.47541C19.5796 5.8347 20.2849 3.80516 20.2857 1.71436Z"
+                    stroke="#616161"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span class="ml-2 text-[#616161]">Filter </span>
+              </button>
+              <button
+                mat-flat-button
+                class="bg-[#EE0033] text-[#FAFAFA]"
+                (click)="addTenant()"
+              >
+                <mat-icon
+                  class="icon-size-6 mr-2"
+                  svgIcon="heroicons_outline:plus"
+                ></mat-icon>
+                {{ t("tenant.add_tenant") }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="basis-0 grow shrink app-table border rounded-xl">
+          <app-data-table
+            [pagination]="pagination"
+            (sizeChange)="onSizeChange($event)"
+            (pageChange)="onPageChange($event)"
+            [rows]="items"
+            [columns]="columns"
+            [paginate]="true"
+            [actionTemplate]="actionTemplate"
+            [rowTemplate]="rowTemplate"
+          >
+            <ng-template [appCellTemplate]="'action'" let-item>
+              <div class="w-full">
+                <button mat-icon-button class="p-2 bg-[#e0e0e0]">
+                  <mat-icon
+                    type="basic"
+                    [svgIcon]="'heroicons_outline:eye'"
+                    [matMenuTriggerFor]="menu"
+                  ></mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="onEdit(item)">
+                    <mat-icon
+                      svgIcon="heroicons_outline:pencil"
+                      class="icon-size-5"
+                    ></mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="onDelete(item)">
+                    <mat-icon
+                      svgIcon="heroicons_outline:trash"
+                      class="icon-size-5"
+                    ></mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </ng-template>
+            <ng-template [appCellTemplate]="'status'" let-item>
+              <div
+                [matMenuTriggerFor]="menuS"
+                [class]="item.status | optionClass : statusOptions"
+                class="px-1 w-20 border cursor-pointer inline-flex justify-between items-center rounded text-md"
+              >
+                <span>{{ item.status | optionLabel : statusOptions }}</span>
+                <mat-icon
+                  [ngClass]="
+                    item.status === 1 ? 'text-[#44B987]' : 'text-[#FD557E]'
+                  "
+                  svgIcon="heroicons_solid:arrow-down-select"
+                  class="cursor-pointer icon-size-5"
+                ></mat-icon>
+              </div>
+              <mat-menu #menuS="matMenu">
+                <ng-container *ngFor="let statusOption of statusOptions">
+                  <button
+                    mat-menu-item
+                    (click)="changeStatus(item, statusOption.value)"
+                  >
+                    <span>{{ statusOption.label }}</span>
+                  </button>
+                </ng-container>
+              </mat-menu>
+            </ng-template>
+            <ng-template [appCellTemplate]="'access'" let-item>
+              <button
+                class="px-2 py-1 rounded-md font-semibold text-center whitespace-nowrap inline-block text-[#EE0033] bg-[#FEEBEF]"
+              >
+                Access
+              </button>
+            </ng-template>
+          </app-data-table>
+          <!-- <app-pagination
+            [pagination]="pagination"
+            (sizeChange)="onSizeChange($event)"
+            (pageChange)="onPageChange($event)"
+          ></app-pagination> -->
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</ng-container>

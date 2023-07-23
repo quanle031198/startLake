@@ -1,0 +1,237 @@
+<ng-container *transloco="let t">
+  <div class="w-full h-full">
+    <mat-card class="bg-card h-full">
+      <div class="">
+        <div class="card-title mb-3">
+          <app-breadcrumb></app-breadcrumb>
+        </div>
+      </div>
+      <div class="content mt-4 w-full">
+        <div class="flex justify-between">
+          <div class="text-4xl leading-[40px] card-title mb-3">Edit Tenant</div>
+          <div class=""></div>
+          <div class="flex">
+            <div class="mt-1">
+              <button mat-flat-button class="bg-[#e0e0e0] mr-4">
+                <span class="">Cancel</span>
+              </button>
+              <button mat-flat-button class="bg-[#EE0033] px-5 text-[#FAFAFA]">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="card-container border mb-4 pb-3 w-full rounded-lg">
+          <section class="px-3 h-full">
+            <div class="flex justify-between mt-3">
+              <h2 class="text-xl font-semibold mr-2 uppercase">
+                general information
+              </h2>
+            </div>
+            <div class="grid grid-cols-1 gap-1">
+              <div class="flex flex-col mb-2">
+                <label class="required font-semibold mb-2">Name</label>
+                <div class="">
+                  <mat-form-field
+                    class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+                  >
+                    <input class="w-full" placeholder="Name" matInput />
+                  </mat-form-field>
+                  <!-- <app-error-message
+                      [control]="formGroup.get('serviceName')"
+                      name="Service"
+                    ></app-error-message> -->
+                </div>
+              </div>
+              <div class="flex flex-col mb-2">
+                <label class="required font-semibold mb-2">Partner</label>
+                <div class="">
+                  <mat-form-field
+                    class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+                  >
+                    <input class="w-full" placeholder="Partner" matInput />
+                  </mat-form-field>
+                  <!-- <app-error-message
+                      [control]="formGroup.get('serviceName')"
+                      name="Service"
+                    ></app-error-message> -->
+                </div>
+              </div>
+              <div class="flex flex-col mb-2">
+                <label class="required font-semibold mb-2">Partner code</label>
+                <div class="">
+                  <mat-form-field
+                    class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+                  >
+                    <input class="w-full" placeholder="Partner code" matInput />
+                  </mat-form-field>
+                  <!-- <app-error-message
+                      [control]="formGroup.get('serviceName')"
+                      name="Service"
+                    ></app-error-message> -->
+                </div>
+              </div>
+              <div class="flex flex-col mb-2">
+                <label class="required font-semibold mb-2">Create date</label>
+                <div class="">
+                  <mat-form-field
+                    class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+                  >
+                    <input class="w-full" matInput type="date" />
+                  </mat-form-field>
+                  <!-- <app-error-message
+                      [control]="formGroup.get('serviceName')"
+                      name="Service"
+                    ></app-error-message> -->
+                </div>
+              </div>
+              <div class="flex flex-col mb-2">
+                <label class="required font-semibold mb-2"
+                  >Expiration date</label
+                >
+                <div class="">
+                  <mat-form-field
+                    class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+                  >
+                    <input class="w-full" matInput type="date" />
+                  </mat-form-field>
+                  <!-- <app-error-message
+                      [control]="formGroup.get('serviceName')"
+                      name="Service"
+                    ></app-error-message> -->
+                </div>
+              </div>
+              <div class="flex flex-col mb-2">
+                <label class="required font-semibold mb-2">Owner mail</label>
+                <div class="grid grid-cols-4 md:grid-cols-5 gap-3 md:gap-0">
+                  <div class="col-span-3 md:col-span-4 mr-2">
+                    <mat-form-field
+                      class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+                    >
+                      <input class="w-full" matInput type="date" />
+                    </mat-form-field>
+                    <!-- <app-error-message
+                      [control]="formGroup.get('serviceName')"
+                      name="Service"
+                    ></app-error-message> -->
+                  </div>
+                  <div class="col-span-1">
+                    <button mat-flat-button class="bg-[#e0e0e0]">
+                      <span class="">Reset Password</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <!-- Plan -->
+        <div class="card-container border mb-4 pb-3 w-full rounded-lg">
+          <section class="px-3 h-full">
+            <div class="flex justify-between mt-3">
+              <h2 class="text-xl font-semibold mr-2 uppercase">Plan</h2>
+            </div>
+            <div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 px-3">
+                <div class="flex flex-col">
+                  <h2 class="text-lg my-2 font-semibold">Pro</h2>
+                  <div>
+                    <span
+                      class="mr-2 border border-[#44b987] px-2 py-1 rounded-md text-[#44b987]"
+                      >Current plan</span
+                    >
+                    <span class="text-[#777e90]">28 days left</span>
+                  </div>
+                  <div class="flex my-2">
+                    <h2 class="text-xl">$750/</h2>
+                    <span>Month</span>
+                  </div>
+                  <div class="mb-2">
+                    <span class="rounded-3xl p-1 mr-2 pt-2 bg-[#e5f6e6]">
+                      <mat-icon
+                        svgIcon="heroicons_outline:check"
+                        class="icon-size-6 m-auto text-[#00a520]"
+                      ></mat-icon>
+                    </span>
+
+                    Demo
+                  </div>
+                  <div class="mb-2">
+                    <span class="rounded-3xl p-1 mr-2 pt-2 bg-[#e5f6e6]">
+                      <mat-icon
+                        svgIcon="heroicons_outline:check"
+                        class="icon-size-6 m-auto text-[#00a520]"
+                      ></mat-icon>
+                    </span>
+
+                    Demo
+                  </div>
+                  <div class="mb-2">
+                    <span class="rounded-3xl p-1 mr-2 pt-2 bg-[#e5f6e6]">
+                      <mat-icon
+                        svgIcon="heroicons_outline:check"
+                        class="icon-size-6 m-auto text-[#00a520]"
+                      ></mat-icon>
+                    </span>
+
+                    Demo
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <div class="flex">
+                    <div>
+                      <mat-icon
+                        svgIcon="heroicons_outline:chart-pie"
+                        class="icon-size-6 mr-3 text-[#ee0033]"
+                      ></mat-icon>
+                      <span>UI/UX</span>
+                    </div>
+                  </div>
+                  <div class="flex ml-3">
+                    <div>
+                      <span class="mr-2">.</span>
+                      <span>Demo</span>
+                    </div>
+                  </div>
+                  <div class="flex ml-3">
+                    <div>
+                      <span class="mr-2">.</span>
+                      <span>Demo</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Transaction -->
+      <div class="card-container rounded-lg mb-2">
+        <section class="border px-3">
+          <div class="flex justify-between mt-3">
+            <h2 class="text-xl font-semibold mr-2 uppercase">Transaction</h2>
+            <div (click)="isCollapse[2] = !isCollapse[2]">
+              <mat-icon
+                [svgIcon]="
+                  isCollapse[2]
+                    ? 'heroicons_solid:arrow-down-select'
+                    : 'heroicons_solid:arrow-up-solid'
+                "
+                class="cursor-pointer text-[#474343]"
+              ></mat-icon>
+            </div>
+          </div>
+          <div *ngIf="isCollapse[2]">
+            <app-transaction-field
+              [items]="itemsTransaction"
+              [columns]="columnsTransaction"
+            ></app-transaction-field>
+          </div>
+        </section>
+      </div>
+    </mat-card>
+  </div>
+</ng-container>

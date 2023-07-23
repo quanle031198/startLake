@@ -1,0 +1,79 @@
+<div class="basis-0 grow shrink app-table" >
+  <app-data-table
+    [rows]="items"
+    [columns]="columns"
+    [paginate]="true"
+    [actionTemplate]="actionTemplate"
+    [rowTemplate]="rowTemplate"
+  >
+    <ng-template #actionTemplate let-row>
+      <div class="w-full">
+        <button mat-icon-button class="p-2 bg-[#e0e0e0]">
+          <mat-icon
+            type="basic"
+            [svgIcon]="'heroicons_outline:eye'"
+            [matMenuTriggerFor]="menu"
+          ></mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon
+              svgIcon="heroicons_outline:pencil"
+              class="icon-size-5"
+            ></mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon
+              svgIcon="heroicons_outline:trash"
+              class="icon-size-5"
+            ></mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </div>
+    </ng-template>
+    <ng-template #rowTemplate let-row="row" let-column="column">
+      <ng-container [ngSwitch]="column.columnDef">
+        <ng-container *ngSwitchCase="'status'">
+          <div
+            [matMenuTriggerFor]="menuS"
+            [ngClass]="
+              row.status
+                ? 'border-[#44B987] bg-[#73CBA526] text-[#44B987]'
+                : 'border-[#FD557E] text-[#FD557E] bg-[#FEEBEF]'
+            "
+            class="px-1 w-20 border cursor-pointer inline-flex justify-between items-center rounded text-md"
+          >
+            <span>{{ row.status ? "Active" : "InActive" }}</span>
+            <mat-icon
+              [ngClass]="
+                row.status ? 'text-[#44B987]' : 'text-[#FD557E]'
+              "
+              svgIcon="heroicons_solid:arrow-down-select"
+              class="cursor-pointer icon-size-5"
+            ></mat-icon>
+          </div>
+          <mat-menu #menuS="matMenu">
+            <button mat-menu-item>
+              <span>Active</span>
+            </button>
+            <button mat-menu-item>
+              <span>InActive</span>
+            </button>
+          </mat-menu>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <div
+            [innerHTML]="
+              column.cellRenderer
+                ? column.cellRenderer(row)
+                : row[column.columnDef]
+            "
+            class="whitespace-nowrap truncate text-base text-[#616161]"
+          ></div>
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </app-data-table>
+</div>

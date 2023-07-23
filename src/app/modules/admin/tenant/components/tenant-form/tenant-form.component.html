@@ -1,0 +1,160 @@
+<ng-container *transloco="let t">
+  <div class="flex flex-col h-full">
+    <div class="header border-b flex justify-between items-center p-6">
+      <div class="text-xl font-bold card-title">Thêm mới Tenant</div>
+      <div>
+        <button
+          mat-icon-button
+          class="hover:bg-slate-500"
+          (click)="dialogRef.close()"
+        >
+          <mat-icon
+            svgIcon="heroicons_outline:x"
+            title="Edit"
+            class="icon-size-5"
+          ></mat-icon>
+        </button>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 px-6 mt-4 gap-2 h-full"
+      [formGroup]="form"
+    >
+      <div class="flex flex-col mb-2">
+        <label class="required font-semibold mb-2">Name</label>
+        <div class="">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+          >
+            <input
+              class="w-full"
+              placeholder="Name"
+              matInput
+              formControlName="name"
+            />
+          </mat-form-field>
+          <app-error-message
+            [control]="form.get('name')"
+            name="Name"
+          ></app-error-message>
+        </div>
+      </div>
+      <div class="flex flex-col mb-2">
+        <label class="required font-semibold mb-2">Partner</label>
+        <div class="">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+          >
+            <mat-select placeholder="Partner" formControlName="partnerId">
+              <mat-option
+                *ngFor="let item of partnerList$ | async"
+                [value]="item.value"
+                >{{ item.label }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <app-error-message
+            [control]="form.get('partner')"
+            name="Partner"
+          ></app-error-message>
+        </div>
+      </div>
+      <div class="flex flex-col mb-2">
+        <label class="required font-semibold mb-2">Partner Code</label>
+        <div class="">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+          >
+            <input
+              class="w-full"
+              placeholder="Partner code"
+              matInput
+              formControlName="partnerCode"
+            />
+          </mat-form-field>
+          <app-error-message
+            [control]="form.get('partnerCode')"
+            name="Partner Code"
+          ></app-error-message>
+        </div>
+      </div>
+      <div class="flex flex-col mb-2">
+        <label class="required font-semibold mb-2">Owner</label>
+        <div class="">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+          >
+            <mat-select placeholder="Owner" formControlName="ownerId">
+              <mat-option
+                *ngFor="let item of ownerList$ | async"
+                [value]="item.value"
+                >{{ item.label }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <app-error-message
+            [control]="form.get('ownerId')"
+            name="Owner mail"
+          ></app-error-message>
+        </div>
+      </div>
+      <div class="flex flex-col mb-2">
+        <label class="required font-semibold mb-2">Password</label>
+        <div class="">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+          >
+            <input
+              class="w-full"
+              placeholder="Password"
+              matInput
+              type="password"
+              formControlName="password"
+            />
+          </mat-form-field>
+          <app-error-message
+            [control]="form.get('password')"
+            name="Password"
+          ></app-error-message>
+        </div>
+      </div>
+      <div class="flex flex-col mb-2">
+        <label class="required font-semibold mb-2">Plan</label>
+        <div class="">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card"
+          >
+            <mat-select placeholder="Plan" formControlName="servicePlanId">
+              <mat-option
+                *ngFor="let item of servicePlanList$ | async"
+                [value]="item.value"
+                >{{ item.label }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <app-error-message
+            [control]="form.get('plan')"
+            name="Plan"
+          ></app-error-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer p-6 flex justify-end">
+      <button mat-raised-button class="mr-3" (click)="dialogRef.close()">
+        <!-- <mat-icon
+          class="icon-size-5 mr-2"
+          svgIcon="heroicons_outline:x"
+        ></mat-icon> -->
+        <span>Hủy </span>
+      </button>
+      <button mat-raised-button color="warn" (click)="save()">
+        <!-- <mat-icon
+          class="icon-size-5 mr-2"
+          svgIcon="heroicons_outline:check"
+        ></mat-icon> -->
+        <span>Xác nhận</span>
+      </button>
+    </div>
+  </div>
+</ng-container>

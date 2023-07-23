@@ -1,0 +1,27 @@
+{
+  "sign-in": "Đăng nhập",
+  "confirm":"Xác nhận",
+  "cancel":"Hủy bỏ",
+  "save":"Lưu",
+  "tenant":{
+    "tenant_management":"Quản lý Tenant",
+    "add_tenant":"Thêm mới Tenant"
+  },
+  "setting": {
+    "user": {
+      "group": "Nhóm",
+      "userList": "Danh sách người dùng",
+      "newGroup": "Nhóm mới",
+      "newUser": "Thêm người dùng"
+    },
+    "permission": {
+      "permissionList": "Danh sách quyền",
+      "infoPermission": "Thông tin quyền",
+      "newPermission": "Thêm mới quyền",
+      "editPermission": "Chỉnh sửa quyền",
+      "deletePermission": "Xóa quyền",
+      "filterPermission": "Lọc",
+      "placeholder_search": "Nội dung tìm kiếm"
+    }
+  }
+}

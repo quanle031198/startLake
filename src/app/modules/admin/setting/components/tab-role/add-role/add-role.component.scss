@@ -1,0 +1,57 @@
+table.role-table{
+  & td.mat-cell{
+    border-bottom: none;
+    &:first-of-type{
+      padding-left: 10px;
+    }
+    &:last-of-type{
+      padding-right: 5px;
+    }
+  }
+  & th.mat-header-cell
+  {
+    &:first-of-type{
+      padding-left: 10px;
+    }
+    &:last-of-type{
+      padding-right: 0px;
+    }
+  }
+  & tr.parent-module:not(:nth-last-child(2)){
+    border-bottom: 1px solid #E0E0E0;
+  }
+  & tbody tr{
+    &:nth-last-child(2){
+      & td:first-of-type{
+        //border-bottom-left-radius: 12px;
+      }
+      & td:last-of-type{
+        //border-bottom-right-radius: 12px;
+      }
+    }
+  }
+}
+tr.example-detail-row {
+  height: 0;
+}
+td.sub-table{
+  padding: 0px !important;
+}
+
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  padding: 8px;
+  margin: 8px 0;
+  height: 104px;
+}
+

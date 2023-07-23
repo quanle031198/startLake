@@ -1,0 +1,33 @@
+.page-number {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  // margin-left:4px;
+  // cursor: pointer;
+  padding: 4px 12px 4px 12px;
+}
+
+.next-icon-right {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.next-icon-left {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+
+}
+
+.next-icon {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  // margin-left:4px;
+  // cursor: pointer;
+  padding: 6px 6px 2px 6px;
+}
+
+select {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}

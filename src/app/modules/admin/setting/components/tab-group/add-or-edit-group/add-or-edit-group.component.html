@@ -1,0 +1,124 @@
+<ng-container *transloco="let t">
+  <div class="flex flex-col">
+    <!--    header-->
+    <div class="header border-b flex justify-between items-center p-6">
+      <div class="text-lg text-[#323544] font-medium font-bold card-title">
+        {{groupData ? 'Edit group' : 'Add group'}}
+      </div>
+      <div>
+        <button mat-icon-button (click)="closeDialog()">
+          <mat-icon svgIcon="heroicons_outline:x" title="Close" class="icon-size-5"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <!--    content-->
+    <div class="mt-4 px-6" [formGroup]="formGroup">
+      <div class="field w-full flex flex-col mb-4">
+        <label class="flex mb-1 text-[#323544] font-medium text-base">
+          <span class="required flex">Name</span>
+          <mat-icon svgIcon="heroicons_outline:exclamation-circle" class="icon-size-5 text-[#AFAFB7] ml-1"></mat-icon>
+        </label>
+        <div class="input w-full">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card custom-form-field">
+            <input class="w-full"
+                   placeholder="Name"
+                   formControlName="groupName"
+                   matInput>
+          </mat-form-field>
+          <app-error-message [control]="formGroup.get('groupName')" name="Group name"></app-error-message>
+        </div>
+      </div>
+      <div class="field w-full flex flex-col mb-4">
+        <label class="flex mb-1 text-[#323544] font-medium text-base">
+          <span class="required flex">Code</span>
+          <mat-icon svgIcon="heroicons_outline:exclamation-circle" class="icon-size-5 text-[#AFAFB7] ml-1"></mat-icon>
+        </label>
+        <div class="input w-full">
+          <mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card">
+            <input class="w-full"
+                   placeholder="Code"
+                   formControlName="code"
+                   matInput>
+          </mat-form-field>
+          <app-error-message [control]="formGroup.get('code')" name="Code"></app-error-message>
+        </div>
+      </div>
+      <div class="field w-full flex flex-col mb-4">
+        <label class="flex mb-1 text-[#323544] font-medium text-base">
+          <span class="required flex">Role</span>
+          <mat-icon svgIcon="heroicons_outline:exclamation-circle" class="icon-size-5 text-[#AFAFB7] ml-1"></mat-icon>
+        </label>
+        <div class="input w-full">
+          <!--<mat-form-field
+            class="fuse-mat-no-subscript w-full mt-4 sm:mt-0 bg-card">
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let r of listRole" [value]="r">{{r}}</mat-option>
+            </mat-select>
+          </mat-form-field>-->
+          <mat-form-field class="fuse-mat-no-subscript w-full bg-card">
+            <mat-select formControlName="roleIds" multiple>
+              <mat-select-trigger class="custom-mat-trigger">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let r of formGroup.get('roleIds').value" class="cursor-pointer"
+                            [removable]="true" (click)="removeRole(r, $event)">
+                    {{ displayLabel(listRole, r, 'code') }}
+                    <mat-icon (click)="removeRole(r, $event)" svgIcon="heroicons_outline:x" class="icon-size-4 cursor-pointer ml-2 text-[#000000]"></mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-select-trigger>
+              <mat-option *ngFor="let r of listRole" [value]="r.id">{{r.code}}</mat-option>
+            </mat-select>
+
+          </mat-form-field>
+          <app-error-message [control]="formGroup.get('roleIds')" name="Role"></app-error-message>
+        </div>
+      </div>
+      <div class="field w-full flex flex-col mb-4">
+        <label class="flex mb-1 text-[#323544] font-medium text-base">
+          <span class="required flex">Member</span>
+          <mat-icon svgIcon="heroicons_outline:exclamation-circle" class="icon-size-5 text-[#AFAFB7] ml-1"></mat-icon>
+        </label>
+        <div class="input w-full">
+          <mat-form-field class="fuse-mat-no-subscript w-full bg-card">
+            <mat-select formControlName="userIds" multiple>
+              <mat-select-trigger class="custom-mat-trigger">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let r of formGroup.get('userIds').value" class="cursor-pointer"
+                            [removable]="true" (click)="removeMember(r, $event)">
+                   {{ displayLabel(listMember, r, 'username') }}
+                    <mat-icon (click)="removeMember(r, $event)" svgIcon="heroicons_outline:x" class="icon-size-4 cursor-pointer ml-2 text-[#000000]"></mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-select-trigger>
+
+              <mat-option *ngFor="let r of listMember" [value]="r?.id">{{r?.username}}</mat-option>
+            </mat-select>
+
+          </mat-form-field>
+          <app-error-message [control]="formGroup.get('userIds')" name="Member"></app-error-message>
+        </div>
+      </div>
+      <div class="field w-full flex gap-5">
+        <label class="flex text-[#323544] font-medium text-base">
+          <span class="flex">Status</span>
+        </label>
+        <div class="input w-full">
+          <mat-slide-toggle formControlName="status" color="primary"></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <!--    footer-->
+    <div class="footer p-6 flex justify-end">
+      <button mat-flat-button (click)="dialogRef.close()" class="btn-secondary mr-3">
+        <span>Hủy bỏ</span>
+      </button>
+      <button mat-flat-button class="btn-primary-active" [disabled]="formGroup.invalid" (click)="formGroup.valid && save$.next(formGroup.getRawValue())">
+        <span>Xác nhận</span>
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+
